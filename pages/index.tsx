@@ -1,32 +1,41 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import PostService from '../services/PostService'
+import PostType from '../types/PostType'
+import useSWR from 'swr'
 
 const Home: NextPage<{
-  staticPostList: any
+  staticPostList: PostType[]
 }> = ({ staticPostList }) => {
+  const { data: postList } = useSWR(`query PostListQuery {
+      posts {
+        edges {
+          node {
+            title
+            id
+            date
+            content
+          }
+        }
+      }
+  }`, PostService.getList, {
+      fallbackData: staticPostList
+  })
   return (
     <div>
-      {staticPostList.map((post: any) => {
-        return (
-          <div>
-            <span>{post.id}</span>
-            <span>{post.title}</span>
-          </div>
-        )
+      {postList!.map((post) => {
+        return <p key={post.id}>{post.title}</p>
       })}
     </div>
   )
 }
 
 export async function getStaticProps() {
-  const staticPostList = await PostService.getList()
+  const staticPostList = await PostService.getList();
   return {
     props: {
       staticPostList
     },
+    revalidate: 10
   }
 }
 

@@ -3,14 +3,14 @@ import axios from "axios";
 const repository = axios.create({
     baseURL: 'http://localhost:8000/graphql',
     headers: {
-        'Content-Type': 'application/json',
-    },
+        'Content-Type': 'application/json'
+    }
 })
 
 const Repository = (query: string, { variables }: Record<string, any> = {}) => {
     const body = {
         query,
-        variables,
+        variables
     }
     return {
         getWp() {
@@ -19,4 +19,5 @@ const Repository = (query: string, { variables }: Record<string, any> = {}) => {
     }
 }
 
-export default Repository;
+export default Repository
+

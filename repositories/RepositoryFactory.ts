@@ -1,7 +1,7 @@
 import PostRepository from "./PostRepository";
 
 const RepositoryFactory = {
-    post: new PostRepository(),
+    post: PostRepository
 }
 
-export default RepositoryFactory;
+export default RepositoryFactory

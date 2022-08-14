@@ -1,20 +1,20 @@
 import Repository from "./Repository";
 
-class PostRepository  {
-    public getList() {
-        return Repository(`query PostList {
+class PostRepository {
+    static getList() {
+        return Repository(`query PostListQuery {
             posts {
-                edges {
-                    node {
-                        title
-                        content
-                        date
-                        id
-                    }
+              edges {
+                node {
+                  title
+                  id
+                  date
+                  content
                 }
+              }
             }
         }`).getWp()
     }
 }
 
-export default PostRepository;
+export default PostRepository

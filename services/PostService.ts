@@ -1,17 +1,10 @@
 import RepositoryFactory from "../repositories/RepositoryFactory";
 
-type PostType = {
-    title: string,
-    content: string,
-    date: string,
-    id: string,
-}
-
 class PostService {
-    static async getList(): Promise<PostType[]> {
+    static async getList() {
         try {
             const res = await RepositoryFactory.post.getList();
-            return res.data.data.posts.edges.map((data: {node: PostType}) => {
+            return res.data.data.posts.edges.map((data: any) => {
                 return data.node
             })
         } catch(e) {

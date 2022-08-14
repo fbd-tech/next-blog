@@ -1,5 +1,7 @@
-import RepositoryFactory from "../repositories/RepositoryFactory";
+// type
 import PostType from "../types/PostType";
+// repository
+import RepositoryFactory from "../repositories/RepositoryFactory";
 
 class PostService {
     static async getList(): Promise<PostType[]> {

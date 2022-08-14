@@ -1,25 +1,14 @@
 import type { NextPage } from 'next'
-import PostService from '../services/PostService'
+// type
 import PostType from '../types/PostType'
-import useSWR from 'swr'
-
+// service
+import PostService from '../services/PostService'
+// hooks
+import usePostListSwr from '../hooks/swr/usePostListSwr'
 const Home: NextPage<{
   staticPostList: PostType[]
 }> = ({ staticPostList }) => {
-  const { data: postList } = useSWR(`query PostListQuery {
-      posts {
-        edges {
-          node {
-            title
-            id
-            date
-            content
-          }
-        }
-      }
-  }`, PostService.getList, {
-      fallbackData: staticPostList
-  })
+  const postList = usePostListSwr(staticPostList);
   return (
     <div>
       {postList!.map((post) => {
@@ -33,7 +22,7 @@ export async function getStaticProps() {
   const staticPostList = await PostService.getList();
   return {
     props: {
-      staticPostList
+      staticPostList: staticPostList
     },
     revalidate: 10
   }

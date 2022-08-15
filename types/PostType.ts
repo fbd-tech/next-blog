@@ -1,8 +1,14 @@
+import CategoryType from "./CategoryType";
+import FeaturedImageType from "./FeaturedImageType";
+
 interface PostType {
     id: string
+    slug: string
     title: string
     date: string
-    content: string
+    excerpt: string
+    featuredImage: FeaturedImageType
+    category: CategoryType
 }
 
 export default PostType

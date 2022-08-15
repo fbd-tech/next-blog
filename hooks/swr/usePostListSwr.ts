@@ -12,7 +12,7 @@ const usePostListSwr = (staticPostList: PostType[]) => {
         PostService.getList,
         { fallbackData: staticPostList }
     )
-    return postList;
+    return postList
 }
 
-export default usePostListSwr;
+export default usePostListSwr

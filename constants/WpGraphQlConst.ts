@@ -1,5 +1,5 @@
-export class WpGraphQlConfig {
-    static postList = `query PostListQuery {
+export class WpGraphQlPostConst {
+    static list = `query PostListQuery {
         posts {
           edges {
             node {

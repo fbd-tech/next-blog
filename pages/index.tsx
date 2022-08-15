@@ -5,6 +5,7 @@ import PostType from '../types/PostType'
 import PostService from '../services/PostService'
 // hooks
 import usePostListSwr from '../hooks/swr/usePostListSwr'
+
 const Home: NextPage<{
   staticPostList: PostType[]
 }> = ({ staticPostList }) => {

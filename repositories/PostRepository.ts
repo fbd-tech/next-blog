@@ -1,11 +1,11 @@
-// config
-import { WpGraphQlConfig } from "../config/WpGraphQlConfig";
+// const
+import { WpGraphQlPostConst } from "../constants/WpGraphQlConst";
 // repository
 import Repository from "./Repository";
 
 class PostRepository {
     static getList() {
-        return Repository(WpGraphQlConfig.postList).getWp()
+        return Repository(WpGraphQlPostConst.list).getWp()
     }
 }
 

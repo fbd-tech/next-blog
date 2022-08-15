@@ -1,10 +1,10 @@
-import CategoryType from "./CategoryType";
-import FeaturedImageType from "./FeaturedImageType";
+import FeaturedImageType from "./FeaturedImageType"
+import CategoryType from "./CategoryType"
 
 interface PostType {
     id: string
-    slug: string
     title: string
+    slug: string
     date: string
     excerpt: string
     featuredImage: FeaturedImageType

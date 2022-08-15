@@ -1,5 +1,5 @@
 interface CategoryType {
-    slug: string,
+    slug: string
     name: string
 }
 

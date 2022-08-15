@@ -2,9 +2,6 @@
 import PostType from "../types/PostType";
 // repository
 import RepositoryFactory from "../repositories/RepositoryFactory";
-import FeaturedImageType from "../types/FeaturedImageType";
-import CategoryType from "../types/CategoryType";
-import { UrlImageConst } from "../constants/UrlConst";
 
 class PostService {
     static async getList(): Promise<PostType[]> {
@@ -15,22 +12,19 @@ class PostService {
                     id: data.node.id,
                     title: data.node.title,
                     slug: data.node.slug,
-                    excerpt: data.node.title,
                     date: data.node.date,
-                    category: {
-                        name: data.node.categories.edges[0].node.name,
-                        slug: data.node.categories.edges[0].node.slug
-                    },
+                    excerpt: data.node.excerpt,
                     featuredImage: {
-                        url: data.node.featuredImage ?
-                            data.node.featuredImage.node.sourceUrl :
-                            UrlImageConst.noImage
+                        url: data.node.featuredImage.node.sourceUrl
                     },
+                    category: {
+                        slug: data.node.categories.edges[0].node.slug,
+                        name: data.node.categories.edges[0].node.name
+                    }
                 }
                 return post
             })
-        } catch(e) {
-            console.log(e)
+        } catch {
             return []
         }
     }

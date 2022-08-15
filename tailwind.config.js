@@ -6,11 +6,8 @@ module.exports = {
   ],
   theme: {
     extend: {
-      spacing: {
-        main: 'clamp(0px, 1050px, 90vw)',
-      },
-      height: {
-        'article-image': '12rem'
+      width: {
+        'main': 'clamp(0vw, 1000px, 90vw)'
       }
     },
   },

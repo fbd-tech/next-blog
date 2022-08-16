@@ -28,6 +28,43 @@ class PostService {
             return []
         }
     }
+
+    static async getOneBySlug(): Promise<PostType> {
+        try {
+            const res = await RepositoryFactory.post.getOne({slug: 'test1'});
+            const data = res.data.data.post
+            const post: PostType = {
+                id: data.id,
+                title: data.title,
+                slug: data.slug,
+                date: data.date,
+                excerpt: data.excerpt,
+                featuredImage: {
+                    url: data.featuredImage.node.sourceUrl
+                },
+                category: {
+                    slug: data.categories.edges[0].node.slug,
+                    name: data.categories.edges[0].node.name
+                }
+            }
+            return post
+        } catch(e) {
+            console.log(e)
+            throw Error()
+        }
+    }
+
+    static async getAllSlugList(): Promise<PostType[]> {
+        try {
+            const res = await RepositoryFactory.post.getAllSlugList();
+            return res.data.data.posts.edges.map((data: any) => {
+                return { params: { slug: data.node.slug } }
+            })
+        } catch {
+            return []
+        }
+    }
+    
 }
 
 export default PostService

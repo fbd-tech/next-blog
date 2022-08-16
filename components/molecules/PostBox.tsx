@@ -13,7 +13,7 @@ const PostBox = ({ post }: {
     return (
         <article className="shadow-sm shadow-gray-200">
             <div>
-                <Link href={`/${post.slug}`}>
+                <Link href={`/post/${post.slug}`}>
                     <a>
                         <CommImage 
                             src={post.featuredImage.url}
@@ -34,7 +34,7 @@ const PostBox = ({ post }: {
                     <DateText>{post.date}</DateText>
                 </div>
                 <div className="mb-2">
-                    <Link href={`/${post.slug}`}>
+                    <Link href={`/post/${post.slug}`}>
                         <a>
                             <ArticleHeading>{post.title}</ArticleHeading>
                         </a>

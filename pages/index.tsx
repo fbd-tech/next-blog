@@ -7,6 +7,7 @@ import PostService from '../services/PostService'
 import usePostListSwr from '../hooks/swr/usePostListSwr'
 // component
 import PostBox from '../components/molecules/PostBox'
+import Link from 'next/link'
 
 const Home: NextPage<{
   staticPostList: PostType[]

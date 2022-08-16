@@ -1,3 +1,4 @@
+// component
 import Image from "next/image"
 
 const CommImage = ({ src, alt, className='' }: {

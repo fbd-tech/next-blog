@@ -8,12 +8,13 @@ class PostRepository {
         return Repository(WpGraphQlPostConst.list).getWp()
     }
 
-    static getOne({ slug }: {
-        slug: string
+    static getOne({ id }: {
+        id: string
     }) {
-        return Repository(WpGraphQlPostConst.one, {
-            variables: {id: slug}
-        }).getWp()
+        return Repository(
+            WpGraphQlPostConst.one,
+            { variables: { id } }
+        ).getWp()
     }
 
     static getAllSlugList() {

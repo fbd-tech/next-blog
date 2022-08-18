@@ -6,12 +6,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'body': ['Noto Sans JP', 'sans-serif'],
+      },
       width: {
         'main': 'clamp(0vw, 1000px, 90vw)'
       }
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
+  plugins: [],
 }

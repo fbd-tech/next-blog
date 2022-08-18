@@ -1,26 +1,77 @@
-import { NextPage } from "next";
+import { NextPage } from "next"
+// type
+import PostType from "../../types/PostType"
 // service
-import PostService from "../../services/PostService";
+import PostService from "../../services/PostService"
+// hooks
+import usePostSwr from "../../hooks/swr/usePostSwr"
+// component
+import CommImage from "../../components/atoms/image/CommImage"
+import Layout from "../../components/templates/Layout"
+import CategoryLabel from "../../components/atoms/label/CategoryLabel"
+import DateText from "../../components/atoms/text/DateText"
+import PostHeading from "../../components/atoms/text/PostHeading"
+import Link from "next/link"
 
-const Post: NextPage = () => {
+const Post: NextPage<{
+    slug: string,
+    staticPost: PostType
+}> = ({ staticPost, slug }) => {
+    const post = usePostSwr({ id: slug, staticPost })
     return (
-        <div>記事詳細です</div>
+        <Layout>
+            <div className="w-main mx-auto">
+                <article>
+                    <div className="mb-4">
+                        <CommImage
+                            src={post!.featuredImage.url}
+                            alt=""
+                            className="w-full h-96" />
+                    </div>
+                    <div className="flex mb-4">
+                        <div className="mr-3">
+                            <Link href={post!.category.slug}>
+                                <a>
+                                    <CategoryLabel>{post!.category.name}</CategoryLabel>
+                                </a>
+                            </Link>
+                        </div>
+                        <DateText>{post!.date}</DateText>
+                    </div>
+                    <div className="mb-6">
+                        <PostHeading>{post!.title}</PostHeading>
+                    </div>
+                    <div dangerouslySetInnerHTML={{__html: post!.content}}></div>
+                </article>
+            </div>
+        </Layout>
     )
 }
 
 export async function getStaticPaths() {
     const paths = await PostService.getAllSlugList()
-    console.log(paths)
     return {
         paths,
         fallback: false,
     }
 }
   
-export async function getStaticProps() {
-    const post = await PostService.getOneBySlug()
+export async function getStaticProps({ params }: {
+    params: {
+        slug: string
+    }
+}) {
+    const slug = params.slug
+    const staticPost = await PostService.getOne({ id: slug })
+    if (!staticPost) {
+        return { notFound: true }
+    }
     return {
-        props: {},
+        props: {
+            slug,
+            staticPost
+        },
+        revalidate: 10
     }
 }
 

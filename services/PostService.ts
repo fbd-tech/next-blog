@@ -1,14 +1,15 @@
 // type
-import PostType from "../types/PostType";
+import PostType from "../types/PostType"
+import PostOnListType from "../types/PostOnListType"
 // repository
-import RepositoryFactory from "../repositories/RepositoryFactory";
+import RepositoryFactory from "../repositories/RepositoryFactory"
 
 class PostService {
-    static async getList(): Promise<PostType[]> {
+    static async getList(): Promise<PostOnListType[]> {
         try {
-            const res = await RepositoryFactory.post.getList();
+            const res = await RepositoryFactory.post.getList()
             return res.data.data.posts.edges.map((data: any) => {
-                const post: PostType = {
+                const post: PostOnListType = {
                     id: data.node.id,
                     title: data.node.title,
                     slug: data.node.slug,
@@ -29,16 +30,18 @@ class PostService {
         }
     }
 
-    static async getOneBySlug(): Promise<PostType> {
+    static async getOne({ id }: {
+        id: string
+    }): Promise<PostType | null> {
         try {
-            const res = await RepositoryFactory.post.getOne({slug: 'test1'});
+            const res = await RepositoryFactory.post.getOne({ id })
             const data = res.data.data.post
             const post: PostType = {
                 id: data.id,
                 title: data.title,
                 slug: data.slug,
                 date: data.date,
-                excerpt: data.excerpt,
+                content: data.content,
                 featuredImage: {
                     url: data.featuredImage.node.sourceUrl
                 },
@@ -48,15 +51,18 @@ class PostService {
                 }
             }
             return post
-        } catch(e) {
-            console.log(e)
-            throw Error()
+        } catch {
+            return null
         }
     }
 
-    static async getAllSlugList(): Promise<PostType[]> {
+    static async getAllSlugList(): Promise<{
+        params: {
+            slug: string
+        }
+    }[]> {
         try {
-            const res = await RepositoryFactory.post.getAllSlugList();
+            const res = await RepositoryFactory.post.getAllSlugList()
             return res.data.data.posts.edges.map((data: any) => {
                 return { params: { slug: data.node.slug } }
             })

@@ -26,7 +26,7 @@ export class WpGraphQlPostConst {
       }
     }`
 
-    static one = `query PostBySlugQuery($id: ID!) {
+    static one = `query PostQuery($id: ID!) {
       post(id: $id, idType: SLUG) {
         categories {
           edges {
@@ -37,7 +37,7 @@ export class WpGraphQlPostConst {
           }
         }
         date
-        excerpt
+        content
         featuredImage {
           node {
             sourceUrl

@@ -1,14 +1,14 @@
 // type
-import PostType from "../../types/PostType"
+import PostOnListType from "../../types/PostOnListType"
 // component
 import CommImage from "../atoms/image/CommImage"
 import CategoryLabel from "../atoms/label/CategoryLabel"
-import ArticleHeading from "../atoms/text/ArticleHeading"
+import ArticleOnListHeading from "../atoms/text/ArticleOnListHeading"
 import DateText from "../atoms/text/DateText"
 import Link from "next/link"
 
 const PostBox = ({ post }: {
-    post: PostType
+    post: PostOnListType
 }) => {
     return (
         <article className="shadow-sm shadow-gray-200">
@@ -36,7 +36,7 @@ const PostBox = ({ post }: {
                 <div className="mb-2">
                     <Link href={`/post/${post.slug}`}>
                         <a>
-                            <ArticleHeading>{post.title}</ArticleHeading>
+                            <ArticleOnListHeading>{post.title}</ArticleOnListHeading>
                         </a>
                     </Link>
                 </div>

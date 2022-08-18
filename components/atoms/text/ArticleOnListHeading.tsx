@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-const ArticleHeading = ({ children }: {
+const ArticleOnListHeading = ({ children }: {
     children: ReactNode
 }) => {
     return (
@@ -8,4 +8,4 @@ const ArticleHeading = ({ children }: {
     )
 }
 
-export default ArticleHeading
+export default ArticleOnListHeading

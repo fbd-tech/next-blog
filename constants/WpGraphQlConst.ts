@@ -1,26 +1,59 @@
 export class WpGraphQlPostConst {
+    private static _itemsOnList = `
+      categories {
+        edges {
+          node {
+            name
+            slug
+          }
+        }
+      }
+      date
+      excerpt
+      featuredImage {
+        node {
+          sourceUrl
+        }
+      }
+      id
+      slug
+      title`
+
+    private static _itemsOnOne = `
+      categories {
+        edges {
+          node {
+            name
+            slug
+          }
+        }
+      }
+      date
+      content
+      featuredImage {
+        node {
+          sourceUrl
+        }
+      }
+      id
+      slug
+      title`
+
     static list = `query PostListQuery {
       posts {
         edges {
           node {
-            categories {
-              edges {
-                node {
-                  name
-                  slug
-                }
-              }
-            }
-            date
-            excerpt
-            featuredImage {
-              node {
-                sourceUrl
-              }
-            }
-            id
-            slug
-            title
+            ${this._itemsOnList}
+          }
+        }
+      }
+    }`
+
+    static listByCategory = `query PostListByCategoryQuery($categoryId: Int!) {
+      posts(where: {categoryId: $categoryId}) {
+        edges {
+          node {
+            ${this._itemsOnList}
           }
         }
       }
@@ -28,24 +61,7 @@ export class WpGraphQlPostConst {
 
     static one = `query PostQuery($id: ID!) {
       post(id: $id, idType: SLUG) {
-        categories {
-          edges {
-            node {
-              name
-              slug
-            }
-          }
-        }
-        date
-        content
-        featuredImage {
-          node {
-            sourceUrl
-          }
-        }
-        id
-        slug
-        title
+        ${this._itemsOnOne}
       }
     }`
 
@@ -56,6 +72,22 @@ export class WpGraphQlPostConst {
             slug
           }
         }
+      }
+    }`
+
+    static allCategorySlugList = `query PostAllCategorySlugListQuery {
+      categories {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }`
+
+    static categoryIdBySlug = `query PostCategoryIdBySlugQuery($id: ID!) {
+      category(id: $id, idType: SLUG) {
+        categoryId
       }
     }`
 }

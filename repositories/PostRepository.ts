@@ -4,7 +4,15 @@ import { WpGraphQlPostConst } from "../constants/WpGraphQlConst";
 import Repository from "./Repository";
 
 class PostRepository {
-    static getList() {
+    static getList({ categoryId }: {
+        categoryId?: number
+    }) {
+        if (categoryId) {
+            return Repository(
+                WpGraphQlPostConst.listByCategory,
+                { variables: { categoryId } }
+            ).getWp()
+        }
         return Repository(WpGraphQlPostConst.list).getWp()
     }
 
@@ -20,6 +28,20 @@ class PostRepository {
     static getAllSlugList() {
         return Repository(WpGraphQlPostConst.allSlugList).getWp()
     }
+
+    static getAllCategorySlugList() {
+        return Repository(WpGraphQlPostConst.allCategorySlugList).getWp()
+    }
+
+    static getCategoryIdBySlug({ slug }: {
+        slug: string
+    }) {
+        return Repository(
+            WpGraphQlPostConst.categoryIdBySlug,
+            { variables: { id: slug } }
+        ).getWp()
+    }
+    
 }
 
 export default PostRepository

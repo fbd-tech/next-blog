@@ -13,7 +13,7 @@ import Layout from '../components/templates/Layout'
 const Home: NextPage<{
   staticPostList: PostOnListType[]
 }> = ({ staticPostList }) => {
-  const postList = usePostListSwr(staticPostList)
+  const postList = usePostListSwr({ staticPostList })
   return (
     <Layout>
       <div className='flex w-main mx-auto'>
@@ -30,10 +30,10 @@ const Home: NextPage<{
 }
 
 export async function getStaticProps() {
-  const staticPostList = await PostService.getList();
+  const staticPostList = await PostService.getList({});
   return {
     props: {
-      staticPostList: staticPostList
+      staticPostList
     },
     revalidate: 10
   }

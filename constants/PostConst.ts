@@ -1,5 +1,5 @@
 class PostConst {
-    static sizePerPage = 1
+    static sizePerPage = 9
 }
 
 export default PostConst

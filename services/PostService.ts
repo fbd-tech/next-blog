@@ -80,6 +80,26 @@ class PostService {
         }
     }
 
+    static async getAllPageAndCategoryList() {
+        const total = await this.getTotal()
+        const pageList = this._makePageList(total)
+        var allPageAndCategoryList = pageList.map((page:number) => {
+            return { params: { param: ['page', page.toString()] }}
+        })
+
+        const res = await RepositoryFactory.post.getAllCategorySlugList()
+        res.data.data.categories.edges.forEach((data: any) => {
+            const categorySlug = data.node.slug
+            const total = data.node.posts.pageInfo.offsetPagination.total
+            const pageList = this._makePageList(total)
+            pageList.forEach((page:number) => {
+                allPageAndCategoryList.push({
+                    params: { param: ['category', categorySlug, 'page', page.toString()]
+                }})
+            })
+        })
+        return allPageAndCategoryList
+    }
 
     static async getAllCategorySlugList(): Promise<{
         params: {
@@ -123,6 +143,11 @@ class PostService {
 
     private static _makeOffsetPaginationFromPage(page: number): OffsetPaginationType {
         return { offset: (page - 1) * PostConst.sizePerPage, size: PostConst.sizePerPage }
+    }
+
+    private static _makePageList(total: number) {
+        const pageTotal = Math.ceil(total / PostConst.sizePerPage)
+        return [...Array(pageTotal)].map((_, i) => i + 1)
     }
     
 }

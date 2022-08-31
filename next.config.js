@@ -9,7 +9,19 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/1',
+        destination: '/post/params/page/1',
+      },
+      {
+        source: '/page/:page',
+        destination: '/post/params/page/:page',
+      },
+      {
+        source: '/category/:category',
+        destination: '/post/params/category/:category/page/1',
+      },
+      {
+        source: '/category/:category/page/:page',
+        destination: '/post/params/category/:category/page/:page',
       },
     ]
   },

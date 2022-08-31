@@ -90,6 +90,13 @@ export class WpGraphQlPostConst {
         edges {
           node {
             slug
+            posts {
+              pageInfo {
+                offsetPagination {
+                  total
+                }
+              }
+            }
           }
         }
       }

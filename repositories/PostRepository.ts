@@ -1,19 +1,25 @@
 // const
 import { WpGraphQlPostConst } from "../constants/WpGraphQlConst";
+// type
+import OffsetPaginationType from "../types/OffsetPaginationType";
 // repository
 import Repository from "./Repository";
 
 class PostRepository {
-    static getList({ categoryId }: {
+    static getList({ offsetPagination, categoryId }: {
+        offsetPagination: OffsetPaginationType,
         categoryId?: number
     }) {
         if (categoryId) {
             return Repository(
                 WpGraphQlPostConst.listByCategory,
-                { variables: { categoryId } }
+                { variables: { offsetPagination, categoryId } }
             ).getWp()
         }
-        return Repository(WpGraphQlPostConst.list).getWp()
+        return Repository(
+            WpGraphQlPostConst.list,
+            { variables: { offsetPagination } }
+        ).getWp()
     }
 
     static getOne({ id }: {
@@ -40,6 +46,10 @@ class PostRepository {
             WpGraphQlPostConst.categoryIdBySlug,
             { variables: { id: slug } }
         ).getWp()
+    }
+
+    static getTotal() {
+        return Repository(WpGraphQlPostConst.total).getWp()
     }
     
 }

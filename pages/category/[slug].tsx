@@ -14,10 +14,10 @@ const PostListByCategory: NextPage<{
     categoryId: number,
     staticPostList: PostOnListType[]
 }> = ({ categoryId, staticPostList }) => {
-  const postList = usePostListSwr({categoryId, staticPostList})
+  const [postList, _] = usePostListSwr({ currentPage: 1, categoryId, staticPostList, staticTotal: 9 })
   return (
     <Layout>
-      <div className='flex w-main mx-auto'>
+      <div className='flex flex-wrap w-main mx-auto'>
         {postList!.map((post) => {
           return (
             <div key={post.id} className='w-1/3 pr-4 pb-4 [&:nth-of-type(3n)]:pr-0'>
@@ -45,7 +45,7 @@ export async function getStaticProps({ params }: {
 }) {
     const slug = params.slug
     const categoryId = await PostService.getCategoryIdBySlug({ slug })
-    const staticPostList = await PostService.getList({ categoryId })
+    const [staticPostList, _] = await PostService.getList({ page: 1, categoryId })
     return {
         props: {
             categoryId,
